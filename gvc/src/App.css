@@ -1,0 +1,38 @@
+.homeMainImage {
+  background-image: url(./image/homePage.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  height: 500px;
+  background-size: cover;
+  background-attachment: full;
+}
+
+.banner-txt {
+  position: absolute; 
+  top: 90%; 
+  left: 50%;
+  width: 100%;
+  transform: translate( -50%, -50%); 
+  font-size: x-large;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+
+.button_style {
+  border-color: #2969F3;
+  text-align: center;
+  margin: 20px 0px 0px 0px;
+  color: #ffffff;
+  width: 200px;
+  height: 40px;
+  background-color: #2969F3;
+  padding: 10px 30px;
+  border-radius: 10px;
+}
+.button_dv_style {
+  text-align: center;
+}
+
