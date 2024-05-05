@@ -1,12 +1,11 @@
 import "./Header.css";
 import logo from '../image/G.V.C Logo.png';
-import MyPage from "./MyPage"; //로그인 페이지SignUp
+import MyPage from "./MyPage"; 
 import HomePage from "./HomePage";
 
-//모듈 가져오기
-import React from "react"; //기본 리엑트 모듈
-import { Routes, Route } from 'react-router-dom'; //페이지 이동 .
-import { useNavigate } from "react-router-dom"; //페이지 이동 시키는 모듈
+import React from "react"; 
+import { Routes, Route } from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom"; 
 
 const Header = () => {
     const navigate = useNavigate();
