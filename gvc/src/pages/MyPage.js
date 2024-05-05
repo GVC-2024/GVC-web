@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './MyPage.css';
-
+import { useNavigate } from 'react-router-dom';
 
 function Mypage() {
+    const navigate = useNavigate();
     // 회의 일정 데이터 예시
     const initialMeetings = [
         { id: 1, title: '2024년 4월 15일 회의', time: '10:00' },
@@ -24,14 +25,13 @@ function Mypage() {
         console.log('수정하기 버튼 클릭');
     };
 
-    const handleShareClick = (id) => {
-        // 공유편집 버튼 클릭 시 동작
-        console.log(`공유편집 버튼 클릭 - ID: ${id}`);
+
+    const onClickButtonMeetingSum = (id) => {
+     navigate(`/meeting-summary/${id}`);
     };
 
-    const handleSummaryClick = (id) => {
-        // AI 요약 버튼 클릭 시 동작
-        console.log(`AI 요약 버튼 클릭 - ID: ${id}`);
+     const onClickButtonAISummary = (id) => {
+        navigate(`/ai-summary/${id}`);
     };
 
     return (
@@ -63,15 +63,11 @@ function Mypage() {
                             <strong>{meeting.title}</strong> {meeting.time}
                             <button
                                 className="share-button"
-                                onClick={() => handleShareClick(meeting.id)}
-                            >
-                                공유편집
+                                onClick={() => onClickButtonMeetingSum(meeting.id)}>공유편집
                             </button>
                             <button
                                 className="summary-button"
-                                onClick={() => handleSummaryClick(meeting.id)}
-                            >
-                                AI 요약
+                                onClick={() => onClickButtonAISummary(meeting.id)}>AI 요약
                             </button>
                         </li>
                     ))}

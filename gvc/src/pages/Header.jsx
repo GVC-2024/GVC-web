@@ -1,6 +1,7 @@
 import "./Header.css";
 import logo from '../image/G.V.C Logo.png';
 import MyPage from "./MyPage"; //로그인 페이지SignUp
+import HomePage from "./HomePage";
 
 //모듈 가져오기
 import React from "react"; //기본 리엑트 모듈
@@ -12,6 +13,9 @@ const Header = () => {
 
     const onClickButtonMyPage = () => {
         navigate("/myPage");
+    };
+    const navigateHomePage = () => {
+        navigate("/");
     };
     
     return (
@@ -32,14 +36,14 @@ const Header = () => {
             </div>
 
             <nav className="wrapper">
-                <div style={{
+            <div style={{
                     fontWeight: 'bold',
                     fontSize: '24px',
-                    textAlign: 'center'
-                }} > G.V.C
-                </div>
-                <div className="div_hover" onClick={onClickButtonMyPage}>마이페이지</div>
-                <div>나의 회의</div>
+                    textAlign: 'center',
+                    cursor: 'pointer' 
+                }} onClick={navigateHomePage}>G.V.C</div>
+                <div>마이페이지</div>
+                <div className="div_hover" onClick={onClickButtonMyPage}>나의 회의</div>
             </nav>
 
             <Routes>
