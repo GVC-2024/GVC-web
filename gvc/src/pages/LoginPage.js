@@ -1,8 +1,3 @@
-
-박샘솔 <peace@sookmyung.ac.kr>
-오후 11:17 (0분 전)
-나에게
-
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
