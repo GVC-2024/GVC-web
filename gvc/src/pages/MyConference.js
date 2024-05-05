@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './MyPage.css';
+import "./MyConference.css";
 import { useNavigate } from 'react-router-dom';
 
-function Mypage() {
+function MyConference() {
     const navigate = useNavigate();
     // 회의 일정 데이터 예시
     const initialMeetings = [
@@ -35,7 +35,7 @@ function Mypage() {
     };
 
     return (
-        <div className="MyPage">
+        <div className="MyConference">
             <h1>나의 회의 일정</h1>
 
             {/* 캘린더 섹션 */}
@@ -77,4 +77,4 @@ function Mypage() {
     );
 }
 
-export default Mypage;
+export default MyConference;

@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const onClickButtonMyPage = () => {
-        navigate("/myPage");
+        navigate("/myconference");
     };
     const navigateHomePage = () => {
         navigate("/");
