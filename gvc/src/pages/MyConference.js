@@ -15,16 +15,15 @@ function MyConference() {
     const [meetings, setMeetings] = useState(initialMeetings);
 
     // 예약, 수정, 공유편집, AI 요약 버튼 클릭 시 동작 함수들
+
     const handleReserveClick = () => {
-        // 예약 버튼 클릭 시 동작
-        console.log('예약 버튼 클릭');
+        navigate('/reservation');
     };
 
     const handleEditClick = () => {
         // 수정하기 버튼 클릭 시 동작
         console.log('수정하기 버튼 클릭');
     };
-
 
     const onClickButtonMeetingSum = (id) => {
      navigate(`/meeting-summary/${id}`);
@@ -48,8 +47,8 @@ function MyConference() {
                         <Calendar />
                     </div>
                     <div className="buttons-container">
-                        <button className="reserve-button">회의 예약</button>
-                        <button className="edit-button">수정하기</button>
+                        <button className="reserve-button" onClick={handleReserveClick}>회의 예약</button>
+                        <button className="edit-button" onClick={handleEditClick}>수정하기</button>
                     </div>
                 </div>
             </div>

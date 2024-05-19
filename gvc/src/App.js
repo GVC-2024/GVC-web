@@ -9,9 +9,11 @@ import SignUp from "./pages/SignUp";
 import MyConference from "./pages/MyConference";
 import MeetingSummary from './pages/MeetingSummary';
 import AISummary from './pages/AISummary';
+import ReservationPage from "./pages/ReservationPage";
 
 
 // 스타일 로드
+//<Route path="/login" element={<Login />} /> 
 import "./App.css";
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
                 <Route path="/myconference" element={<MyConference />} />
                 <Route path="/meeting-summary/:id" element={<MeetingSummary />} />
                 <Route path="/ai-summary/:id" element={<AISummary />} />
+                <Route path="/reservation" element={<ReservationPage />} />
             </Routes>
         </div>
     );

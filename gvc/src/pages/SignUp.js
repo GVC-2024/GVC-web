@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './SignUp.css';
 
 const SignUp = () => {
@@ -17,7 +17,6 @@ const SignUp = () => {
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [showPhoneWarning, setShowPhoneWarning] = useState(false);
     const [formError, setFormError] = useState(false); // 폼 오류 상태
-    const usernameRef = useRef(null); // useRef 훅을 사용하여 참조 생성
 
     const validateForm = () => {
         // 기본적인 유효성 검사 로직을 추가
@@ -61,7 +60,6 @@ const SignUp = () => {
 
     return (
         <div className="signup-container">
-
             <form className="signup-form" onSubmit={handleSubmit}>
                 <div className="form-title">회원가입</div>
                 <div className="input-group">
@@ -70,11 +68,10 @@ const SignUp = () => {
                         type="text"
                         name="username"
                         placeholder="아이디"
-                        ref={usernameRef} // input 요소에 참조 적용
                         onChange={handleInputChange}
                         value={userDetails.username}
                     />
-                    <button type="button" className="check-username-btn">중복확인 </button>
+                    <button type="button" className="check-username-btn">중복확인</button>
                 </div>
                 <div className="input-group">
                     <label>비밀번호</label>
@@ -93,7 +90,6 @@ const SignUp = () => {
                     <label>이메일</label>
                     <input type="email" name="email" placeholder="이메일" onChange={handleInputChange} />
                 </div>
-                
                 <div className="input-group">
                     <label>전화번호</label>
                     <input
@@ -122,4 +118,5 @@ const SignUp = () => {
         </div>
     );
 };
-export default SignUp; 
+
+export default SignUp;
