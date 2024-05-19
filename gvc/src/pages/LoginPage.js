@@ -1,4 +1,4 @@
-import React from "react"; //±âº» ¸®¿¢Æ® ¸ðµâ
+import React from "react"; 
 
 const LoginPage = () => {
     return (
