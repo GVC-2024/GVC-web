@@ -1,0 +1,11 @@
+설치한 모듈: 
+npm install express socket.io
+npm install peer
+파일 실행 방법:
+터미널1: npm run peerjs
+터미널2(상단 바에 터미널-새 터미널 열어서, 새로운 터미널 열기):npm run peerjs
+
+사이트 들어가기: 크롬이나 edge 등 사이트 들어가서 
+http://localhost:3000/?room=my-room-id 혹은
+http://localhost:3000
+입력
