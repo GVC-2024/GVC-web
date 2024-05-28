@@ -1,25 +1,24 @@
 import "./Header.css";
 import logo from '../image/G.V.C Logo.png';
-import MyPage from "./MyPage"; 
-import HomePage from "./HomePage";
-
 import React from "react"; 
-import { Routes, Route } from 'react-router-dom'; 
 import { useNavigate } from "react-router-dom"; 
 
 const Header = () => {
     const navigate = useNavigate();
 
+    const onClickButtonMyConference = () => {
+        navigate("/myconference");
+    };
+
     const onClickButtonMyPage = () => {
         navigate("/myPage");
     };
+
     const navigateHomePage = () => {
         navigate("/");
     };
     
     return (
-
-
         <div>
             <div style={{
                     width: "100%",
@@ -35,25 +34,16 @@ const Header = () => {
             </div>
 
             <nav className="wrapper">
-            <div style={{
-                    fontWeight: 'bold',
-                    fontSize: '24px',
-                    textAlign: 'center',
-                    cursor: 'pointer' 
-                }} onClick={navigateHomePage}>G.V.C</div>
-                <div>마이페이지</div>
-                <div className="div_hover" onClick={onClickButtonMyPage}>나의 회의</div>
+                <div style={{
+                        fontWeight: 'bold',
+                        fontSize: '24px',
+                        textAlign: 'center',
+                        cursor: 'pointer' 
+                    }} onClick={navigateHomePage}>G.V.C</div>
+                <div className="div_hover" onClick={onClickButtonMyPage}>마이페이지</div>
+                <div className="div_hover" onClick={onClickButtonMyConference}>나의 회의</div>
             </nav>
-
-            <Routes>
-                <Route path="/myPage" element={<MyPage />} />
-            </Routes>
-
-
-
-
         </div>
-
     );
 }
 
