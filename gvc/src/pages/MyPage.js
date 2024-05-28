@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useNavigate } from "react-router-dom"; 
 
-import './Mypage.css';
-import { MyPageCorrection } from './pages/MyPageCorrection';
+import './MyPage.css';
+import { MyPageCorrection } from './MyPageCorrection';
 
 export function MyPage() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export function MyPage() {
 
   const handleEditClick = () => {
     // 수정하기 버튼 클릭 시 동작
-    navigate("/mypagecorrection")
+    navigate("/myPageCorrection")
   };
 
   const handleCheckboxChange = () => {
@@ -68,7 +68,7 @@ export function MyPage() {
       </div>
 
       <Routes unmountOnNavigate>
-        <Route path="/mypagecorrection" element={<MyPageCorrection />} />
+        <Route path="/myPageCorrection" element={<MyPageCorrection />} />
       </Routes>
     </div>
   );
