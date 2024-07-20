@@ -1,0 +1,385 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    /*양쪽 배열*/
+    
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+    background-color: #63a2f1;
+    height: 50px;
+}
+
+main {
+    width: 100%;
+    flex: 1;
+    background-color: #ffffff;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: hidden;
+
+}
+
+footer {
+    height: 70px;
+    padding: 10px;
+    margin: 0px;
+
+    /*양쪽 배열*/
+    display: flex;
+    justify-content: space-between;
+
+    
+
+    background-color: #63a2f1;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/*컨트롤 아이콘 크기 설정 */
+footer i.fas{
+    margin: 10px;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/*컨트롤 아이콘 크기 설정 */
+header i.fas{
+    margin: 10px;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+
+.content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+
+
+.video-grid-wrapper {
+    
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin:10px;
+}
+
+
+.video-grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 1000px;
+    
+    
+}
+
+.video-container {
+    margin: 5px;
+    background-color: #DDDDDD;
+    border-radius: 10px;
+    position: relative;
+    height: 200px;
+    min-width: 120px;
+    min-height: 120px;
+   
+}
+
+video {
+    width: 100%; 
+    height: 100%; 
+    object-fit: fill;
+    border-radius: 10px;
+}
+
+.video-container i.fa-user {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.tools {
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+button.button {
+    background-color: #2969F3;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.settings-dropdown {
+    position: relative;
+}
+
+.settings-dropdown i.fa-cog {
+    cursor: pointer;
+}
+
+.settings-dropdown-content {
+    display: none;
+    position: absolute;
+    bottom: 30px;
+    background-color: #63a2f1;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.settings-dropdown:hover .settings-dropdown-content {
+    display: block;
+}
+
+.settings-dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.settings-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+}
+footer button{
+    background-color: transparent;
+    border: none;
+}
+.control_icon{
+    display: flex;
+    flex-direction: column; /* 요소들을 수직으로 배치 */ 
+    align-items: center;
+    margin: 10px;
+}
+.control_icons{
+    display: flex;
+    flex-direction: row; /* 요소들을 수직으로 배치 */ 
+    align-items: center;
+}
+#chat{
+    margin: 0px;
+    height: 100%;
+    max-width: 400px;
+    height:100%; 
+    display: flex;
+    flex-direction: column; /* 요소들을 수직으로 배치 */
+
+    margin: 0px;
+    padding: 0px; 
+
+}
+
+/* 구획 나눠 주기 */
+#chat header{
+    height: 50px;
+    width: 100%;
+    background-color: #646464;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    margin: 0px;
+}
+#chat main{ 
+    width: 100%;
+    flex: 1;
+    background-color: #C1C1C1;
+    overflow: auto;
+}
+#chat footer{ 
+    max-height: 200px;
+    padding: 10px;
+    background-color: #C1C1C1;
+
+}
+/* 헤다 부분 */
+#chat header #chat_title{
+    margin: 30px;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 1000;
+}
+#chat header #chat_exit{
+    margin-right: 30px;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 1000;
+
+    border: none;
+    background-color: transparent;
+}
+
+
+/* 채팅 창 부분 */
+#chat main #show_my_message{
+    /* 자식들-프로필아래 텍스트가 나오도록 자식들을 수직으로 */
+    display: flex;
+    flex-direction: column; 
+    margin: 20px;
+  
+}
+
+#chat #show_my_message #my_text{
+    /* 텍스트창을 오른쪽으로 배치 */
+    margin-left: auto; 
+    /* 텍스트창 최대 크기 */
+    max-width: 70%;
+    /* 텍스트창을 아래로 확장*/
+    overflow-wrap: break-word;
+
+    background-color: #bbebfa;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+#chat #show_my_message #my_profile {
+    /* 오른쪽으로 정렬 */
+    display: flex;
+    justify-content: flex-end;
+    /* 내용물을 위아래 중앙으로 정렬 */
+    align-items: center;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#chat #show_my_message #my_profile #my_img{
+    width: 30px;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 50%;
+}
+
+#chat #show_my_message #my_profile #my_name{
+    max-width: calc(70% - 50px);
+    margin: 10px;
+    font-size: 15px;
+    padding:10px;
+    background-color: #dbf6ff;
+    border-radius: 10px;
+
+}
+
+/* 채팅 창 부분-다른 사람 것. */
+#chat main #show_other_message{
+    /* 자식들-프로필아래 텍스트가 나오도록 자식들을 수직으로 */
+    display: flex;
+    flex-direction: column; 
+    margin: 20px;
+  
+}
+
+#chat #show_other_message #other_text{
+    /* 텍스트창을 오른쪽으로 배치 */
+    margin-right: auto; 
+    /* 텍스트창 최대 크기 */
+    max-width: 70%;
+    /* 텍스트창을 아래로 확장*/
+    overflow-wrap: break-word;
+
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+#chat #show_other_message #other_profile {
+    /* 오른쪽으로 정렬 */
+    display: flex; /*mode on*/
+    justify-content: flex-start;
+    /* 내용물을 위아래 중앙으로 정렬 */
+    align-items: center;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#chat #show_other_message #other_profile #other_img{
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+#chat #show_other_message #other_profile #other_name{
+    max-width: calc(70% - 50px);
+    margin: 10px;
+    font-size: 15px;
+    padding:10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+
+}
+
+
+#chat_announcement{
+    text-align: center;
+    margin: 10px;
+    font-weight: 500;
+    
+
+}
+
+#chat footer #send_message{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ffffff;
+    max-height: 200px;
+}
+#chat footer #send_message textarea {
+    flex: 1;
+    padding: 8px;
+    font-size: 15px;
+    border: 1px solid #C1C1C1;
+    border-radius: 5px;
+    margin-right: 10px;
+    min-height: 40px; /* 최소 높이를 설정 */
+    max-height: 200px;
+  }
+
+#chat footer #send_message button{
+    border-radius: 20px;
+    margin: 10px;
+    width: 80px;
+    color: #27b8fc;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
