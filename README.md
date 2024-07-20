@@ -1,3 +1,5 @@
+Meeting 관련 파일 설명. 
+
 npm run dev: meeting 프로그램 실행 명령어.
 
 scripts에 정의된 dev는 nodemon.json은 nodemon.json에 저장된 명령어를 실행. 
