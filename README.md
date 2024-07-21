@@ -30,3 +30,24 @@ src 코드 파일:
 babel.config.json : babel.config.js 사용에 의한 API 노출로 인해 이에 대한 노출 방지와 복잡도를 줄이기 위해 정적 구성 형태로 설정하는 방법
     babel-JavaScript, JSX, TypeScript 코드를 하위 버전의 JavaScript 문법으로 변환시켜주는 역할. 이를 통해서 다른 플랫폼 브라우저에서도 원활한 동작
     Preset : 이 규칙을 모아 놓은 세트. 이러한 설정 세팅은 한번 하고난 뒤 바벨 옵션을 빌드 시 마다 주지 않아도 규칙과 함께 실행 
+기타 설치 모듈(추정)
+npm i nodemon -D
+npm i @babel/core @babel/cli @babel/node -D
+npm i @babel/preset-env -D
+npm i express
+npm i pug    
+ npm i ws    
+npm list express
+npm install express
+npm install pug  
+npm i socket.io    
+npm list socket.io 
+npm i -g  localtunnel
+
+lt --port 3000
+npx localtunnel --port 3000
+
+npm install -g npm@latest  
+npm install electron     
+npm i @socket.io/admin-ui
+npm i "@socket.io/admin-ui"
