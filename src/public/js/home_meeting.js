@@ -15,11 +15,12 @@ const socket = io();
 const urlParams = new URLSearchParams(window.location.search);
 const inputRoomID = urlParams.get('roomID'); //방 이름
 const inputUserNick = urlParams.get('userNick'); //유저 이름
-
 //변수 선언하기
 let myVideoStream; //현재 자신의 카메라 스트림.
 let peersConnection = {}; // peerSocketId
+let mypeers={};
 
+//페이지 
 //페이지 
 requestServerEnterRoom(inputRoomID,inputUserNick);
 
@@ -28,8 +29,6 @@ function startMeeting(){
     requestServerEnterRoom(inputRoomID,inputUserNick);
     
 }
-
-
 
 function getMessage(nick, message, color){
     console.log("get message:${message} from ${nick} color ${color} ");
@@ -40,10 +39,7 @@ seeVideoLogButton.addEventListener('click', showVideoLog);
 //자신의 비디오 설정하기
 mute.addEventListener('click', handleAudioOn); // 오디오 on off.
 video.addEventListener('click', handleMyVideoOn); //비디오 on off
-exitBtn.addEventListener('click', handleExit); 
-function handleExit() {
-    self.close(); //자기자신창을 닫습니다.
-}
+exitBtn.addEventListener('click', ()=>{socket.emit("leaveRoom", inputRoomID, socket.id);self.close();}); 
 
 //자신의 카메라를 화면에 반영하기.
 async function showMyVideo() {
@@ -56,7 +52,8 @@ async function showMyVideo() {
 // 예외가 발생한 경우에는 콘솔에 에러 메시지를 출력
     const videoSetting={audio: true, video: true};
     myVideoStream = await navigator.mediaDevices.getUserMedia(videoSetting);
-    newParticipant(myVideoStream);
+    newParticipant(myVideoStream, socket.id, "white");
+    
     adjustGrid();
     //newParticipant에 의해, 비디오와 오디오가 켜져있으므로, 다시 끈다. 
     chageMyVideoOn();
@@ -115,9 +112,8 @@ function handleMyVideoOn(){
     chageVideoImg();
     chageMyVideoOn();
 }
-//
-// 참여자의 비디오 컨테이너 생성기.
-function newParticipant(participantVideoStream, participantColor) {
+//// 참여자의 비디오 컨테이너 생성기.
+function newParticipant(participantVideoStream, VideosocketId, participantColor) {
 
     //유저 아이콘 생성하기
     userIcon=makeUserIcon(participantColor);
@@ -127,6 +123,8 @@ function newParticipant(participantVideoStream, participantColor) {
 
     //컨테이너 생성하기
     const newVideoContainer = document.createElement('div');
+    newVideoContainer.setAttribute('socketId',VideosocketId );
+    newid=newVideoContainer.getAttribute('socketId',VideosocketId );
     newVideoContainer.classList.add('video-container');
     //컨테이너에 추가하기
     newVideoContainer.appendChild(userIcon);
@@ -207,7 +205,7 @@ async function requestServerEnterRoom(roomName, userNickName) {
 socket.on("denialFull", async() => {alert("full member. denial enter");});
 
 //방에 정상적으로 들어감. 
-socket.on("enterRoom", async (users) => {event.preventDefault();handleEnter(users);});
+socket.on("enterRoom", async (users) => {handleEnter(users);});
 
 // peer의 SDP를 수락하고 처리. SDP 형식을 받으면 이를 수용한다. 
 socket.on("receiveAnswerOffer", async (answer,peerSocketId) => { console.log("received the answer"); peersConnection[peerSocketId].setRemoteDescription(answer); });
@@ -220,7 +218,12 @@ socket.on("receiveOffer", async (offer, peerSocketId) => {handlePeerOffer(offer,
 socket.on("getAnouncment",writeChatAnnouncement);// 공지 받기
 
 socket.on("getMessage", writeOtherMessage); //메세지 받기
-//
+
+//피어방 나가기
+socket.on("leavePeer",async(peerSocktId)=>handleLeavePeer(peerSocktId));
+//내방 나가기
+socket.on("leaveMyRoom",async()=>{self.close();});
+
 async function handleEnter(users){
     const usersNum = users.length;
     //let message=`${inputUserNick} enter`;
@@ -238,7 +241,7 @@ async function handleEnter(users){
               await newPeerConnection.setLocalDescription(offer);
               socket.emit("offer", offer, users[i].socketId);
         }
-    }
+    }    
 }
 
 //peer의 연결 방식을 설정한다. 
@@ -269,7 +272,7 @@ function createConnection(peerSocketId) {
       ],
     });
     peerConnection.addEventListener("icecandidate", (data) => {sendIce(data, peerSocketId);}); // 연결방식 설정
-    peerConnection.addEventListener("addstream", (data) => {addVideo(data);}); //비디오 생성
+    peerConnection.addEventListener("addstream", (data) => {addVideo(data,peerSocketId,"red");}); //비디오 생성
     myVideoStream.getTracks().forEach((track) => peerConnection.addTrack(track, myVideoStream)); //내 비디오 스트림 전달
     peersConnection[peerSocketId] = peerConnection;
     return peerConnection;
@@ -282,9 +285,9 @@ function sendIce(data, targetSocketID) {
 }
 
 //peer-다른 참가자의 스트림을 입력값으로 주면, 이를 화면에 추가한다. 
-function addVideo(data) {
-    console.log("addVideo");
-    newParticipant(data.stream,"red");
+function addVideo(data,vedioSocketId) {
+    console.log(`addVideo: ${vedioSocketId}`);
+    newParticipant(data.stream, vedioSocketId, "red");
     adjustGrid(); // 화면 조정 함수 호출
 }
 
@@ -307,6 +310,7 @@ function sendMyMessage(event,roomName,myNick){
 writeChatAnnouncement("message");
 //chat 중앙에 공지-떠남 등.
 function writeChatAnnouncement(message){
+    //event.preventDefault();
     let chat_announcement_container = document.createElement('div');
     chat_announcement_container.classList.add('chat_announcement'); //css 설정 가져오기
     chat_announcement_container.innerText=message;
@@ -314,6 +318,7 @@ function writeChatAnnouncement(message){
 }
 // 내 메세지 쓰기
 function writeMyMessage(message){
+
     let my_message_container = document.createElement('div');
     my_message_container.classList.add('show_my_message'); //css 설정 가져오기
     //html 생성하기
@@ -329,6 +334,7 @@ function writeMyMessage(message){
 }
 // 남 메세지 쓰기
 function writeOtherMessage(nick, message){
+    event.preventDefault();
     let other_message_container = document.createElement('div');
     
     other_message_container.classList.add('show_other_message');
@@ -341,4 +347,21 @@ function writeOtherMessage(nick, message){
             <div id="other_text">${message}</div>
         </div>`;
     chatArea.appendChild(other_message_container);
+}
+//비디오 제거하기 
+function removeVideo(deleteeSocketId) {
+    const videoContainers = document.querySelectorAll('.video-container')
+    videoContainers.forEach((videoContainer) => {
+        let id=videoContainer.getAttribute('socketId');
+        if (id === deleteeSocketId) {
+            videoGrid.removeChild(videoContainer);
+          }
+        else{
+        }
+    });
+    adjustGrid();
+}
+//피어가 나갈 때 수행할 것. 
+function handleLeavePeer(peerSocktId) {
+    removeVideo(peerSocktId);
 }
