@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image } from 'react-native';
 import './LoginPage.css';
-
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-function Login() {
+function LoginPage() {
     const navigate = useNavigate();
 
     const [uid, setUid] = useState('');
@@ -15,69 +13,59 @@ function Login() {
     const [pwValid, setPwValid] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
 
+    const [errorMessage, setErrorMessage] = useState(''); // 추가된 부분
+
     useEffect(() => {
         if (uidValid && pwValid) {
             setNotAllow(false);
-            return;
+        } else {
+            setNotAllow(true);
         }
-        setNotAllow(true);
     }, [uidValid, pwValid]);
 
     const handleUid = (e) => {
         setUid(e.target.value);
-        const regex = /^[a-zA-Z0-9]{4,}$/; // 4자 이상 영문 또는 숫자
-        if (regex.test(e.target.value)) {
-            setUidValid(true);
-        } else {
-            setUidValid(false);
-        }
-    }
+        const regex = /^[a-zA-Z0-9]{4,}$/;
+        setUidValid(regex.test(e.target.value));
+    };
 
     const handlePw = (e) => {
         setPw(e.target.value);
-        const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,}$/;
-        if (regex.test(e.target.value)) {
-            setPwValid(true);
-        } else {
-            setPwValid(false);
-        }
-    }
+        const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+        setPwValid(regex.test(e.target.value));
+    };
 
     const onClickConfirmButton = async () => {
         try {
             const response = await axios.post('http://localhost:5000/api/auth/login', { uid, upassword: pw });
-            alert('로그인에 성공했습니다.');
-            navigate('/'); // HomePage로 이동
+            if (response.status === 200) {
+                navigate('/'); // HomePage로 이동
+            }
         } catch (error) {
-            alert("등록되지 않은 회원입니다.");
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data.message); // 추가된 부분
+            } else {
+                setErrorMessage("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."); // 추가된 부분
+            }
         }
-    }
+    };
 
     const handleNavigateToLoginSearch = () => {
         navigate('/loginSearchPage');
-    }
+    };
 
     const handleNavigateToSignUp = () => {
         navigate('/signUp');
-    }
+    };
 
     return (
         <div className='page'>
-            <div className='title'>
-                로그인/회원가입
-            </div>
-            <div>
-                <View style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center' }}>
-                    <Image source={require('../image/logo.JPG')}
-                        style={{ width: 200, height: 200 }}
-                        resizeMode="stretch" />
-                </View>
-            </div>
-            <div className='titleWrap'>
-                로그인
-            </div>
-
+            <div className='title'> 로그인 </div>
             <div className='contentWrap'>
+                <br>
+                </br>
+                <br>
+                </br>
                 <div className='inputTitle'>아이디</div>
                 <div className='inputWrap'>
                     <input 
@@ -87,25 +75,23 @@ function Login() {
                         value={uid} 
                         onChange={handleUid}/>
                 </div>
-                <div className='errorMessageWrap'>
-                {!uidValid && uid.length > 0 && (
-                        <div>올바른 아이디를 입력해주세요. (4자 이상 영문 또는 숫자)</div>
-                )}
-                </div>
 
                 <div style={{ marginTop: "28px" }} className='inputTitle'>비밀번호</div>
                 <div className='inputWrap'>
                     <input 
                         type='password'
                         className='input'
-                        placeholder='영문 숫자 포함 4자 이상 입력해주세요.'
+                        placeholder='비밀번호를 입력해주세요'
                         value={pw} 
                         onChange={handlePw}/>
                 </div>
                 <div className='errorMessageWrap'>
-                {!pwValid && pw.length > 0 && (
-                        <div>영문, 숫자 포함 4자 이상 입력해주세요. </div>
-                )}
+                    {!pwValid && pw.length > 0 && (
+                        <div>올바른 비밀번호를 입력해주세요 </div>
+                    )}
+                    {errorMessage && (
+                        <div>{errorMessage}</div> // 추가된 부분
+                    )}
                 </div>
             </div>
 
@@ -114,7 +100,8 @@ function Login() {
                     onClick={onClickConfirmButton}
                     disabled={notAllow} 
                     className='bottomButton' >
-                로그인</button>
+                    로그인
+                </button>
             </div>
             <div className='sub' onClick={handleNavigateToLoginSearch}>아이디/비밀번호 찾기</div>
             <div className='sub1'> 아직 회원이 아니신가요?</div>
@@ -122,20 +109,11 @@ function Login() {
                 <button
                     onClick={handleNavigateToSignUp}
                     className='bottomButton1'>
-                회원가입</button>
+                    회원가입
+                </button>
             </div>
         </div>
     )
-}
-
-function LoginPage() {
-    return (
-        <div> 
-            <div>
-                <Login/> 
-            </div>     
-        </div>
-    );
 }
 
 export default LoginPage;

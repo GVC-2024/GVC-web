@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const app = express();
 const port = 5000;
 
@@ -14,13 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
+// Sequelize 및 데이터베이스 모델 설정
 const sequelize = require('./models/db');
 const User = require('./models/user');
 
 sequelize.sync({ alter: true }).then(() => {
   console.log('Database & tables created!');
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

@@ -18,13 +18,17 @@ const SignUp = () => {
     });
 
     const [passwordMatch, setPasswordMatch] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [usernameValid, setUsernameValid] = useState(true);
     const [showPhoneWarning, setShowPhoneWarning] = useState(false);
     const [formError, setFormError] = useState(false);
-    const [usernameAvailable, setUsernameAvailable] = useState(null);
+    const [usernameStatus, setUsernameStatus] = useState(null);
+    const [emailStatus, setEmailStatus] = useState(null);
+    const [phoneStatus, setPhoneStatus] = useState(null);
     const usernameRef = useRef(null);
 
     const validateForm = () => {
-        return userDetails.username && userDetails.password && userDetails.confirmPassword && passwordMatch && !showPhoneWarning;
+        return userDetails.username && userDetails.password && userDetails.confirmPassword && passwordMatch && passwordValid && !showPhoneWarning && usernameStatus === 'available' && emailStatus === 'available' && phoneStatus === 'available';
     };
 
     const handleSubmit = async (e) => {
@@ -42,7 +46,7 @@ const SignUp = () => {
                 });
                 console.log('User registered:', response.data);
                 setFormError(false);
-                navigate('/home');
+                navigate('/');
             } catch (error) {
                 console.error('Error registering user:', error);
                 setFormError(true);
@@ -52,45 +56,68 @@ const SignUp = () => {
         }
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = async (e) => {
         const { name, value } = e.target;
         setUserDetails(prev => ({ ...prev, [name]: value }));
 
-        if (name === 'password' || name === 'confirmPassword') {
-            const password = name === 'password' ? value : userDetails.password;
-            const confirmPassword = name === 'confirmPassword' ? value : userDetails.confirmPassword;
-            setPasswordMatch(password === confirmPassword);
+        if (name === 'password') {
+            // Validate password: minimum 6 characters, must include letters and numbers
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/; 
+            setPasswordValid(passwordRegex.test(value));
+            setPasswordMatch(value === userDetails.confirmPassword);
+        }
+
+        if (name === 'confirmPassword') {
+            setPasswordMatch(value === userDetails.password);
         }
 
         if (name === 'username') {
-            setUsernameAvailable(null); // Reset username availability check
+            const usernameRegex = /^[a-zA-Z0-9]{4,}$/;
+            setUsernameValid(usernameRegex.test(value));
+
+            setUsernameStatus(null); 
+            try {
+                const response = await axios.post('http://localhost:5000/api/auth/check-username', { uid: value });
+                setUsernameStatus('available');
+            } catch (error) {
+                if (error.response && error.response.status === 409) {
+                    setUsernameStatus('unavailable');
+                } else {
+                    console.error('Error checking username:', error);
+                }
+            }
+        }
+
+        if (name === 'email') {
+            setEmailStatus(null); // Reset email availability check
+            try {
+                const response = await axios.post('http://localhost:5000/api/auth/check-email', { uemail: value });
+                setEmailStatus('available');
+            } catch (error) {
+                if (error.response && error.response.status === 409) {
+                    setEmailStatus('unavailable');
+                } else {
+                    console.error('Error checking email:', error);
+                }
+            }
         }
 
         if (name === 'phoneNumber') {
+            setPhoneStatus(null); // Reset phone number availability check
             if (/^[0-9]*$/.test(value) || value === '') {
                 setShowPhoneWarning(false);
+                try {
+                    const response = await axios.post('http://localhost:5000/api/auth/check-phoneNumber', { utel: value });
+                    setPhoneStatus('available');
+                } catch (error) {
+                    if (error.response && error.response.status === 409) {
+                        setPhoneStatus('unavailable');
+                    } else {
+                        console.error('Error checking phone number:', error);
+                    }
+                }
             } else {
                 setShowPhoneWarning(true);
-            }
-        }
-    };
-
-    const checkUsernameAvailability = async () => {
-        if (!userDetails.username) {
-            setUsernameAvailable(false);
-            return;
-        }
-
-        try {
-            const response = await axios.post('http://localhost:5000/api/auth/check-username', {
-                uid: userDetails.username,
-            });
-            setUsernameAvailable(true);
-        } catch (error) {
-            if (error.response && error.response.status === 409) {
-                setUsernameAvailable(false);
-            } else {
-                console.error('Error checking username:', error);
             }
         }
     };
@@ -109,13 +136,14 @@ const SignUp = () => {
                         onChange={handleInputChange}
                         value={userDetails.username}
                     />
-                    <button type="button" className="check-username-btn" onClick={checkUsernameAvailability}>중복확인</button>
-                    {usernameAvailable === false && <div style={{ color: 'red' }}>아이디가 이미 존재합니다.</div>}
-                    {usernameAvailable === true && <div style={{ color: 'green' }}>아이디를 사용할 수 있습니다.</div>}
+                    {!usernameValid && <div style = {{color: 'red'}}> 영문 또는 숫자를 포함하여 4자리 이상 입력해주세요.</div>} 
+                    {usernameStatus === 'unavailable' && <div style={{ color: 'red' }}>이미 존재하는 아이디입니다.</div>}
+                    {usernameStatus === 'available' && <div style={{ color: 'green' }}>사용 가능한 아이디입니다.</div>}
                 </div>
                 <div className="input-group">
                     <label>비밀번호</label>
                     <input type="password" name="password" placeholder="비밀번호" onChange={handleInputChange} />
+                    {!passwordValid && <div style={{ color: 'red' }}>영문과 숫자를 포함하여 6자리 이상으로 입력해주세요.</div>}
                 </div>
                 <div className="input-group">
                     <label>비밀번호 확인</label>
@@ -129,6 +157,8 @@ const SignUp = () => {
                 <div className="input-group">
                     <label>이메일</label>
                     <input type="email" name="email" placeholder="이메일" onChange={handleInputChange} />
+                    {emailStatus === 'unavailable' && <div style={{ color: 'red' }}>이미 존재하는 이메일입니다.</div>}
+                    {emailStatus === 'available' && <div style={{ color: 'green' }}>이메일을 사용할 수 있습니다.</div>}
                 </div>
                 <div className="input-group">
                     <label>전화번호</label>
@@ -141,6 +171,8 @@ const SignUp = () => {
                         onChange={handleInputChange}
                     />
                     {showPhoneWarning && <div style={{ color: 'red' }}>숫자로 입력해주세요.</div>}
+                    {phoneStatus === 'unavailable' && <div style={{ color: 'red' }}>이미 가입된 전화번호입니다.</div>}
+                    {phoneStatus === 'available' && <div style={{ color: 'green' }}>전화번호를 사용할 수 있습니다.</div>}
                 </div>
                 <div className="input-group">
                     <label>생년월일</label>
