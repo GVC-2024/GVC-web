@@ -39,7 +39,7 @@ seeVideoLogButton.addEventListener('click', showVideoLog);
 //자신의 비디오 설정하기
 mute.addEventListener('click', handleAudioOn); // 오디오 on off.
 video.addEventListener('click', handleMyVideoOn); //비디오 on off
-exitBtn.addEventListener('click', ()=>{socket.emit("leaveRoom", inputRoomID, socket.id);self.close();}); 
+exitBtn.addEventListener('click', ()=>{socket.emit("leaveRoom", inputRoomID,inputUserNick, socket.id);self.close();}); 
 
 //자신의 카메라를 화면에 반영하기.
 async function showMyVideo() {
@@ -218,11 +218,18 @@ socket.on("receiveOffer", async (offer, peerSocketId) => {handlePeerOffer(offer,
 socket.on("getAnouncment",writeChatAnnouncement);// 공지 받기
 
 socket.on("getMessage", writeOtherMessage); //메세지 받기
+//방에 들어갈때 이전 챗 기록 가져오기
+socket.on("enterRoomChat", async(chatLog) => {handleEnterchat(chatLog);});
 
 //피어방 나가기
-socket.on("leavePeer",async(peerSocktId)=>handleLeavePeer(peerSocktId));
+socket.on("leavePeer",async(peerSocktId)=>{handleLeavePeer(peerSocktId)});
 //내방 나가기
-socket.on("leaveMyRoom",async()=>{self.close();});
+socket.on("leaveMyRoom",async()=>{
+    
+    socket.disconnect();
+    myStream.getTracks().forEach((track) => track.stop());
+    
+    self.close();});
 
 async function handleEnter(users){
     const usersNum = users.length;
@@ -307,12 +314,12 @@ function sendMyMessage(event,roomName,myNick){
         chatMessage.value="";
     }
 }
-writeChatAnnouncement("message");
+
 //chat 중앙에 공지-떠남 등.
 function writeChatAnnouncement(message){
     //event.preventDefault();
     let chat_announcement_container = document.createElement('div');
-    chat_announcement_container.classList.add('chat_announcement'); //css 설정 가져오기
+    chat_announcement_container.id = 'chat_announcement'; //css 설정 가져오기
     chat_announcement_container.innerText=message;
     chatArea.appendChild(chat_announcement_container);
 }
@@ -364,4 +371,12 @@ function removeVideo(deleteeSocketId) {
 //피어가 나갈 때 수행할 것. 
 function handleLeavePeer(peerSocktId) {
     removeVideo(peerSocktId);
+}
+
+function handleEnterchat(chatLog){
+    let chatNum=chatLog.length;
+    for(let i=0;chatNum>i;i++){
+        writeOtherMessage(chatLog[i].chatLogUser,chatLog[i].chatLogContent);
+    }
+
 }
