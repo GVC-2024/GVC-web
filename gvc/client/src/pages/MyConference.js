@@ -15,7 +15,6 @@ function MyConference() {
     const [meetings, setMeetings] = useState(initialMeetings);
 
     // 예약, 수정, 공유편집, AI 요약 버튼 클릭 시 동작 함수들
-
     const handleReserveClick = () => {
         navigate('/reservation');
     };

@@ -1,7 +1,123 @@
 import React, { useEffect, useState } from 'react';
-import './LoginPage.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Page = styled.div`
+    position: relative;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 550px;
+    padding: 0 20px;
+    left: 50%;
+    transform: translate(-49%, 0);
+    overflow: hidden;
+    flex-direction: column;
+`;
+
+const Title = styled.div`
+    margin: 60px auto;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    font-stretch: expanded;
+    color: black;
+`;
+
+const ContentWrap = styled.div`
+    margin-top: 20px;
+    flex: 1;
+`;
+
+const InputTitle = styled.div`
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0e0e0e;
+`;
+
+const InputWrap = styled.div`
+    border-radius: 10px;
+    padding: 16px;
+    background-color: #ADC5FA;
+    margin-top: 10px;
+
+    &:focus-within {
+        border: 2px solid #3c59ea;
+    }
+`;
+
+const Input = styled.input`
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 17px;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #3c59ea02;
+
+    &::placeholder {
+        color: #6E6E6E;
+        font-weight: 400;
+    }
+`;
+
+const ErrorMessageWrap = styled.div`
+    margin-top: 8px;
+    color: #ed1a3a;
+    font-size: 14px;
+    font-weight: 400;
+`;
+
+const ButtonWrap = styled.div`
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+`;
+
+const BottomButton = styled.button`
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    background-color: #2969F3;
+    color: white;
+    margin-top: 30px;
+    cursor: pointer;
+`;
+
+const BottomButton1 = styled.button`
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    background-color: #ADC5FA;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+`;
+
+const Sub = styled.div`
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #030000;
+    margin-top: 15px;
+    cursor: pointer;
+`;
+
+const Sub1 = styled.div`
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #646464;
+    margin-top: 30px;
+`;
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -12,8 +128,7 @@ function LoginPage() {
     const [uidValid, setUidValid] = useState(false);
     const [pwValid, setPwValid] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
-
-    const [errorMessage, setErrorMessage] = useState(''); // 추가된 부분
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         if (uidValid && pwValid) {
@@ -39,13 +154,15 @@ function LoginPage() {
         try {
             const response = await axios.post('http://localhost:5000/api/auth/login', { uid, upassword: pw });
             if (response.status === 200) {
+                const token = response.data.token; // 서버에서 반환된 토큰
+                localStorage.setItem('token', token); // localStorage에 토큰 저장
                 navigate('/'); // HomePage로 이동
             }
         } catch (error) {
             if (error.response && error.response.data) {
-                setErrorMessage(error.response.data.message); // 추가된 부분
+                setErrorMessage(error.response.data.message); 
             } else {
-                setErrorMessage("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."); // 추가된 부분
+                setErrorMessage("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
             }
         }
     };
@@ -59,61 +176,49 @@ function LoginPage() {
     };
 
     return (
-        <div className='page'>
-            <div className='title'> 로그인 </div>
-            <div className='contentWrap'>
-                <br>
-                </br>
-                <br>
-                </br>
-                <div className='inputTitle'>아이디</div>
-                <div className='inputWrap'>
-                    <input 
+        <Page>
+            <Title>로그인</Title>
+            <ContentWrap>
+                <InputTitle>아이디</InputTitle>
+                <InputWrap>
+                    <Input 
                         type='text'
-                        className='input'
                         placeholder='아이디를 입력해주세요'
                         value={uid} 
                         onChange={handleUid}/>
-                </div>
+                </InputWrap>
 
-                <div style={{ marginTop: "28px" }} className='inputTitle'>비밀번호</div>
-                <div className='inputWrap'>
-                    <input 
+                <InputTitle style={{ marginTop: "28px" }}>비밀번호</InputTitle>
+                <InputWrap>
+                    <Input 
                         type='password'
-                        className='input'
                         placeholder='비밀번호를 입력해주세요'
                         value={pw} 
                         onChange={handlePw}/>
-                </div>
-                <div className='errorMessageWrap'>
+                </InputWrap>
+                <ErrorMessageWrap>
                     {!pwValid && pw.length > 0 && (
                         <div>올바른 비밀번호를 입력해주세요 </div>
                     )}
-                    {errorMessage && (
-                        <div>{errorMessage}</div> // 추가된 부분
-                    )}
-                </div>
-            </div>
+                </ErrorMessageWrap>
+            </ContentWrap>
 
-            <div className='buttonWrap'>
-                <button 
+            <ButtonWrap>
+                <BottomButton 
                     onClick={onClickConfirmButton}
-                    disabled={notAllow} 
-                    className='bottomButton' >
+                    disabled={notAllow}>
                     로그인
-                </button>
-            </div>
-            <div className='sub' onClick={handleNavigateToLoginSearch}>아이디/비밀번호 찾기</div>
-            <div className='sub1'> 아직 회원이 아니신가요?</div>
-            <div className='buttonWrap'>
-                <button
-                    onClick={handleNavigateToSignUp}
-                    className='bottomButton1'>
+                </BottomButton>
+            </ButtonWrap>
+            <Sub onClick={handleNavigateToLoginSearch}>아이디/비밀번호 찾기</Sub>
+            <Sub1>아직 회원이 아니신가요?</Sub1>
+            <ButtonWrap>
+                <BottomButton1 onClick={handleNavigateToSignUp}>
                     회원가입
-                </button>
-            </div>
-        </div>
-    )
+                </BottomButton1>
+            </ButtonWrap>
+        </Page>
+    );
 }
 
 export default LoginPage;
