@@ -10,6 +10,7 @@ function handleEnterRoom() {
 
 enterbtn.addEventListener("click", handleEnterRoom);
 
+
 function openMeeting(roomID,userNick) {
   const url = `/home_meeting?roomID=${encodeURIComponent(roomID)}&userNick=${encodeURIComponent(userNick)}`;
   window.open(url, 'home_meeting', 'fullscreen=yes');

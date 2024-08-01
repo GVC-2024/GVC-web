@@ -1,4 +1,4 @@
-//요소 가져오기.
+//요소 가져오기
 const seeVideoLogButton = document.getElementById('see_video_log');
 const videoGrid = document.querySelector('.video-grid');
 const chatArea = document.getElementById('chatArea');

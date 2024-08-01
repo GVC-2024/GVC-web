@@ -22,9 +22,10 @@ app.get("/*", (_, res) => res.redirect("/"));
 let allRooms = [];
 //상수 선언.
 const MAXPEOPLE = 200; // 한 방당 참가 가능한 사람수 
-
 const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
+
+
 
 wsServer.on("connection", (socket) => {
   //when someone enter
