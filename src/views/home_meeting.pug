@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+  
+    title Dashboard
+    link(rel="stylesheet", href="/public/css/home_meeting.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
+  body
+    // header
+    //  div
+    //    i.fas.fa-home
+    //  div
+    //    i.fas.fa-window-minimize
+    //    i.fas.fa-window-maximize
+    //    i.fas.fa-times
+    main
+      .content
+        .video_grid_wrapper
+          .video_grid
+        .tool_container
+          button.button#schedule_Meeting 일정 관리
+          button.button#share_note  공유 메모장
+          button.button#see_video_log  발표자 내용 기록 및 번역
+          
+        div#chat
+            header
+                #chat_title Chat 
+                button#chat_exit X
+            main#chatArea                
+            footer 
+                div#send_message
+                    textarea(placeholder="message", required, type="text")
+                    button(type="submit") send
+        
+    footer
+      .control_icon_container
+        button.control_icon#mute
+          i#muteImg.fas.fa-microphone-slash
+          | voice
+        button.control_icon#video
+          i#videoImg.fas.fa-video-slash
+          | video
+        //i.fas.fa-desktop
+        //i.fas.fa-hand-pointer
+        #seetings
+            #setting_dropdown_menu 
+              #setting_dropdown_item 사용자 초대
+              //setting_dropdown_item 배경설정
+              //setting_dropdown_item 비디오/마이크 설정
+              #setting_dropdown_item 회의링크 복사
+            button.control_icon#settingButton
+              i.fas.fa-cog
+              | setting
+
+      button.div#exit
+        i.fas.fa-power-off
+
+script(src="/socket.io/socket.io.js") 
+script(src="/public/js/home_meeting.js")
+script(src="/public/js/share_note.js")
+

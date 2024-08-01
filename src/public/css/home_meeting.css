@@ -1,0 +1,390 @@
+/*목차*/
+/*화면구성*/
+/*비디오 화면 설정*/
+/*비디오 화면 주요 버튼 설정*/
+/*chat 대화 공간 설정*/
+/*화면 기본 설정*/
+body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/*화면 구성*/
+/*header {    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #63a2f1;
+    height: 50px;
+}
+*/
+/*컨텐츠 공간*/
+main {
+    width: 100%;
+    flex: 1;
+    background-color: #ffffff;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+
+}
+/*컨텐츠 세부 설정. */
+.content {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    
+}
+/*하단 컨트롤바 공간*/
+footer {
+    height: 70px;
+    padding: 10px;
+    margin: 0px;
+    display: flex; /*양쪽 배열*/
+    justify-content: space-between;
+    background-color: #63a2f1;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+/*비디오 화면 설정*/
+
+/*비디오 화면들이 띄워주는공간*/
+.video_grid_wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin:10px;
+}
+
+/*비디오 화면들이 띄워주는 공간을 그리드로 나눔*/
+.video_grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 1000px;
+    
+    
+}
+/*하나의 비디오 화면*/
+.video_space {
+    margin: 5px;
+    background-color: #DDDDDD;
+    border-radius: 10px;
+    position: relative;
+    height: 200px;
+    min-width: 100px;
+    min-height: 120px;
+   
+}
+/*화상 화면이 송출되는 공간. 비디오가 어떻게 나올 것인가. */
+video {
+    width: 100%; 
+    height: 100%; 
+    object-fit: fill;
+    border-radius: 10px;
+}
+/*비디오 화면 유저 아이콘*/
+.video_space i.fa-user {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+/*비디오 화면 주요 버튼 설정*/
+
+/*일정관리 등의 기능 버튼을 수직으로 배열*/
+.tool_container {
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+/*모든 버튼 기본 설정*/
+button {
+    background-color: #2969F3; 
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+/*아래쪽 버튼 기본 설정*/
+footer button{
+    background-color: transparent;
+    border: none;
+    color: black;
+}
+/* 컨트롤바 아이콘들을 수평으로 배치 */ 
+.control_icon_container{
+    display: flex;
+    flex-direction: row; /* 요소들을 수직으로 배치 */ 
+    align-items: center;
+    margin: 0px;
+}
+/*아이콘 설정. < 아이콘 그림 & 글자간의 배열> */ 
+.control_icon{
+    display: flex;
+    flex-direction: column; /* 요소들을 수직으로 배치 */ 
+    align-items: center;
+    margin: 10px;
+}
+
+/*컨트롤 아이콘 그림  설정 */
+footer i.fas{
+    margin: 10px;
+    font-size: 35px;
+    cursor: pointer;
+}
+/*컨트롤바 중 환결설정 드롭다운*/
+#seetings{
+    position: relative; /* 부모 요소를 기준으로 설정 */
+    margin: 0px;
+
+}
+#setting_dropdown_menu {
+    display: none; 
+    position: absolute;
+    top: -73px; /* 컨트롤바의 위쪽으로 이동 */
+    left: 50%; /* 가운데 정렬 */
+    transform: translateX(-50%); /* 가운데 정렬을 위한 이동 */
+    width: 125px;
+    margin: 0px;
+    padding: 0px;
+    background-color:#2969F3;
+    
+}
+
+#setting_dropdown_item {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    
+}
+
+#setting_dropdown_item:not(:last-child) {
+    border-bottom: 2px dashed #ffffff;
+    
+}
+
+#setting_dropdown_item:hover {
+    background-color: #63a2f1;
+    color: black;
+}
+
+
+/*chat 대화 공간 설정*/
+
+
+/*chat 전체 공간 */
+#chat{
+    margin: 0px;
+    height: 100%;
+    max-width: 400px;
+    height:100%; 
+    display: flex;
+    flex-direction: column; /* 요소들을 수직으로 배치 */
+    margin: 0px;
+    padding: 0px; 
+}
+
+/* chat 구획 나눠 주기 */
+
+/* chat 헤더 */
+#chat header{
+    height: 50px;
+    width: 100%;
+    background-color: #646464;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    color: #ffffff; /* + 전체 글자 색*/
+}
+/* chat 내용 나오는 공간 */
+#chat main{ 
+    width: 100%;
+    flex: 1;
+    background-color: #C1C1C1;
+    overflow: auto;
+}
+/* chat 하단 메세지 및 보내기 나오는 공간- 삭제 예정 */
+#chat footer{ 
+    max-height: 200px;
+    padding: 10px;
+    background-color: #C1C1C1;
+}
+/*각 부분 세부 설정*/
+/* 헤더 부분 타이틀 */
+#chat header #chat_title{
+    margin: 30px;
+    font-size: 20px;
+    font-weight: 1000;
+}
+/* 헤다 부분 x 버튼 */
+#chat header #chat_exit{
+    margin-right: 30px;
+    font-size: 20px;
+    font-weight: 1000;
+    border: none;
+    background-color: transparent;
+}
+
+
+/* 채팅 내역 부분 */
+
+/* 내 메시지 */
+#chat main #show_my_message{
+    /* 자식들-프로필아래 텍스트가 나오도록 자식들을 수직으로 */
+    display: flex;
+    flex-direction: column; 
+    margin: 20px;
+  
+}
+/* 내 메시지 글자*/
+#chat #show_my_message #my_text{
+    margin-left: auto;  /* 텍스트창을 오른쪽으로 배치 */
+    max-width: 70%; /* 텍스트창 최대 크기 */
+    overflow-wrap: break-word;/* 텍스트창을 아래로 확장*/
+    background-color: #bbebfa;
+    padding: 10px;
+    border-radius: 5px;
+}
+/* 내 메시지 그림 및 이름*/
+#chat #show_my_message #my_profile {
+    display: flex;/* 오른쪽으로 정렬 */
+    justify-content: flex-end;
+    align-items: center;/* 내용물을 위아래 중앙으로 정렬 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/* 내 메시지 그림*/
+#chat #show_my_message #my_profile #my_img{
+    width: 30px;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 50%;
+}
+/* 내 메시지 이름*/
+#chat #show_my_message #my_profile #my_name{
+    max-width: calc(70% - 50px);
+    margin: 10px;
+    font-size: 15px;
+    padding:10px;
+    background-color: #dbf6ff;
+    border-radius: 10px;
+
+}
+
+/* 채팅 창 부분-다른 사람 부분 */
+#chat main #show_other_message{
+    /* 자식들-프로필아래 텍스트가 나오도록 자식들을 수직으로 */
+    display: flex;
+    flex-direction: column; 
+    margin: 20px;
+}
+
+#chat #show_other_message #other_text{
+    margin-right: auto; 
+    max-width: 70%;
+    overflow-wrap: break-word;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+#chat #show_other_message #other_profile {
+    display: flex; 
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#chat #show_other_message #other_profile #other_img{
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+#chat #show_other_message #other_profile #other_name{
+    max-width: calc(70% - 50px);
+    margin: 10px;
+    font-size: 15px;
+    padding:10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+
+}
+
+/*chat 공지*/
+#chat_announcement{
+    text-align: center;
+    margin: 10px;
+    font-weight: 500;
+    
+
+}
+/*메세지 보내는 창-삭제 예정*/
+#chat footer #send_message{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ffffff;
+    max-height: 200px;
+}
+/*메세지 내역 입력*/
+#chat footer #send_message textarea {
+    flex: 1;
+    padding: 8px;
+    font-size: 15px;
+    border: 1px solid #C1C1C1;
+    border-radius: 5px;
+    margin-right: 10px;
+    min-height: 40px; /* 최소 높이를 설정 */
+    max-height: 200px;
+  }
+/*메세지 보내기*/
+#chat footer #send_message button{
+    border-radius: 20px;
+    margin: 10px;
+    width: 80px;
+    color: #27b8fc;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+/*화면 밖으로 밀어서 숨기기*/
+.hide_out_screen {
+    position: absolute;
+    left: -9999px;
+}
+
+
