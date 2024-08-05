@@ -1,0 +1,223 @@
+.popUpBodyn_style{
+  background-color: #ffffff; /*하단 섹션의 배경색을 흰색으로 설정*/
+  padding: 20px; /* 내부 여백 20px 설정*/
+  text-align: center/* 텍스트를 가운데 정렬*/
+}
+
+/*팝업창 뒤 회색처리 생성*/
+.overlayScreen_style {
+  /**/
+  /*브라우저 창 전체를 덮기 위해 fixed 포지션 사용*/
+    position: fixed; 
+    /*페이지 전체를 덮기 위해 모두 0으로 설정*/
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    /*반투명한 검정 배경색으로 설정하여 오버레이 효과 생성*/
+    background-color: rgba(0, 0, 0, 0.3);
+
+    /*자식요소-팝업창을 정렬하기 위해 값 설정
+     자식 요소를 가운데 정렬하기 위해 flexbox 사용
+      가로축 가운데 정렬
+     세로축 가운데 정렬
+     다른 요소들 위에 표시되도록 z-index 설정
+     */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+  
+  /*전체적인 팝업창 크기 설정
+  자식 요소들이 부모의 경계를 넘지 않도록 설정*/
+  .popupSmall_style {
+    width: 400px;
+
+    
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+   /*큰 팝업창 크기 설정
+  자식 요소들이 부모의 경계를 넘지 않도록 설정*/
+  .popupBig_style {
+    width: 700px;
+    
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .popupBigBody_style {
+    background-color: #ffffff;
+    padding: 5px;
+    color: #000000;
+    text-align: left;
+    padding-left: 30px;
+    height: 400px;
+    position: relative;    
+    
+  }
+
+  .popupBigBody_p_style {
+    padding-left: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    font-size: 20px;
+  }
+
+  .checkButton_style_div_for_right {
+    float: right;
+    padding-top: 0px;
+    padding-right: 10px;
+    align-items: right;
+
+  }
+
+  /*팝업창의 상단을 파란색으로
+  flexbox를 사용하여 내부 요소 배치
+  내부 여백 설정
+  색 설정
+  요소들을 양 끝으로 정렬 -X를 양 끝으로 배치하기 위해 필요.
+
+  헤더 글자 검정*
+  */
+
+  .inputMeetingName_style {
+    width: 150px;
+    padding: 1px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    text-align: left;
+    background-color: #b4ccff;
+    color: #000000;
+    font-weight: lighter;
+
+  }
+
+  .popupHeader_style{
+    display: flex; 
+    padding: 10px 20px;
+    
+    justify-content: space-between; 
+
+    background-color: #2969F3;
+  }
+
+  
+  /*팝업창 상단 닫기 버튼 스타일
+  테두리,배경를 없애기, 버튼 색 검정 
+  마우스 커서 모양 설정*/
+  .headerCloseButton_style{
+    
+    border: none;
+    
+    font-size: 15px;
+    text-align: right;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer; 
+
+    background: none;
+    color: #000000;
+    
+  }
+  
+  /*팝업창 몸통 부분
+  배경흰색으로 
+  텍스트를 가운데 정렬
+  relativet사용해서 확인 버튼 아래쪽에
+  */
+  .popupBody_style {
+    background-color: #ffffff;
+    padding: 10px;
+    color: #000000;
+    text-align: center;
+    height: 150px;
+    position: relative;
+    
+  }
+
+
+  .popupBody_GoMeeting_style {
+    background-color: #ffffff;
+    padding: 10px;
+    color: #000000;
+    text-align: center;
+    height: 150px;
+    position: relative;
+    
+  }
+  
+  .popupBody_style p{
+
+    margin-top: 40px;
+    
+  }
+
+  /*회의 들어가기용 문단*/
+  .popupBody_GoMeeting_p_style {
+
+    margin-top: 10px;
+    
+  }
+.country_comboBox_style{
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: none;
+  height: 35px;
+  margin-bottom: 0px;
+  text-align: center;
+  background-color: #2969F3;
+  color: #ffffff;
+
+}
+
+.country_comboBox_style_checkButton_style {
+  border-radius: 5px;
+
+  cursor: pointer;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-height: 30px;
+  margin-top: 12px;
+  align-items: flex-end;
+
+  background-color: #2969F3;
+  color: #ffffff;
+}
+  /*확인 버튼 
+  버튼 테두리 제거
+  마우스 클릭 버튼 활성화*/
+
+
+  .checkButton_style {
+    border-radius: 5px;
+
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    max-height: 30px;
+    margin-top: 30px;
+    align-items: flex-end;
+    min-width: 50px;
+
+    background-color: #2969F3;
+    color: #ffffff;
+  }
+
+  .inputMeetingCode_style {
+    width: 90%;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    margin-bottom: 0px;
+    text-align: center;
+    background-color: #b4ccff;
+    color: #000000;
+
+  }

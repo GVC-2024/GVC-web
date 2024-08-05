@@ -1,0 +1,88 @@
+body {
+    font-size: 18px; /* 기본 폰트 크기를 키움 */
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-left: 500px;
+}
+
+.title {
+    font-size: 32px; 
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.contentWrap {
+    width: 300px;
+}
+
+.inputTitle {
+    margin-top: 20px;
+    font-size: 18px; 
+}
+
+.inputWrap {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    width: 120%;
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.smallInputWrap {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.smallInput {
+    width: 50%; 
+    padding: 10px;
+    font-size: 18px; 
+    margin-top: 8px;
+}
+
+.separator {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.bottomButton {
+    width: 60%; 
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 18px; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    max-width: none; 
+}
+
+.bottomButton:disabled {
+    background-color: #cccccc;
+}
+
+.buttonWrap {
+    display: flex;
+    justify-content: space-between;
+    width: 120%;
+    gap: 10px; 
+}
+
+.error {
+    color: red;
+    font-size: 14px; 
+    margin-top: 5px;
+}
