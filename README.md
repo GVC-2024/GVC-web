@@ -11,7 +11,25 @@ gvc 통합 사항 변경사항 정리
 	
 	사용방법 popupguide.js 참고
 		1. 종류: 단순 메세지 전달/ 회의 주최하기 수락 취소/ /언어 선택/ 미팅 세부 사항-시간 등 설정.
-	
+
+1.     const [isPopupOpen, setIsPopupOpen] = useState({
+        noID:false,//안내 메세지를 전달하는 팝업창입니다.
+    }); 에서 필요한 열 팝업창 변수를 정의한다.
+  
+    //팝업 열기 함수 정의
+    const handleOpenPopup = (e) => { 
+        const { name } = e.target;
+        setIsPopupOpen(prev => ({ ...prev, [name]: true }));
+    };
+
+    //상태 안내 팝업 닫기  함수 정의
+    const handleClosePopup = (name) => { 
+        setIsPopupOpen(prev => ({ ...prev, [name]: false }));
+    };
+   //팝업창을 뷰 <div> 에 넣어준다. + 닫기 함수 등록,  name은 일관성이 있어야 한다. 
+    {isPopupOpen.noID && (<PopUpComponentMessage message="존재하지 않는 아이디입니다" name ="noID" onClose={handleClosePopup} />)}
+
+
 	3. Header.jsx에 일시적으로 주최하기2 버튼 추가
 	    //샘솔 추가
 	    const onClickOpenConference = () => {
@@ -80,12 +98,16 @@ gvc 통합 사항 변경사항 정리
 	import { BrowserRouter as Router, Route,Routes } from 'react-router-dom'
 	import PageRender from './PageRender';
 	import { createRoot } from 'react-dom/client';
+ 
 서버쪽
-	서버 아래에 video_server추가.
- 	package.json에 "video": "node video_server.js" 추가
-  	실행 명령어: npm run video
-   	설치한 모듈들:
-    # Install Express
-		npm install express
-		npm install socket.io
-		npm install cors
+
+ 서버 아래에 video_server추가.
+ 
+3.package.json에 "video": "node video_server.js" 추가
+  
+2.실행 명령어: npm run video
+   
+1.설치한 모듈들:
+  	npm install express
+	npm install socket.io
+	npm install cors
