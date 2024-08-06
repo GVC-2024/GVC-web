@@ -1,0 +1,27 @@
+.banner-txt {
+    position: absolute; /* ÇÙ½ÉÄÚµå */
+    top: 90%; /* ÇÙ½ÉÄÚµå */
+    left: 50%; /* ÇÙ½ÉÄÚµå */
+    width: 100%;
+    transform: translate( -50%, -50%); /* ÇÙ½ÉÄÚµå */
+    font-size: x-large;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.button_style {
+    border-color: #2969F3;
+    text-align: center;
+    margin: 20px 0px 0px 0px;
+    color: #ffffff;
+    width: 200px;
+    height: 40px;
+    background-color: #2969F3;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+.button_dv_style {
+    text-align: center;
+}
