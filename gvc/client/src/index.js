@@ -1,16 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // React 18의 createRoot 사용
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import GlobalStyle from './pages/GlobalStyle'; 
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <Router>
       <GlobalStyle />
       <App />
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

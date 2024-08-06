@@ -154,8 +154,10 @@ function LoginPage() {
         try {
             const response = await axios.post('http://localhost:5000/api/auth/login', { uid, upassword: pw });
             if (response.status === 200) {
-                const token = response.data.token; // 서버에서 반환된 토큰
+                const { token, user } = response.data; // 서버에서 반환된 토큰과 사용자 정보
                 localStorage.setItem('token', token); // localStorage에 토큰 저장
+                localStorage.setItem('user', JSON.stringify(user)); // localStorage에 사용자 정보 저장
+                window.dispatchEvent(new Event('storage'));
                 navigate('/'); // HomePage로 이동
             }
         } catch (error) {
@@ -197,8 +199,9 @@ function LoginPage() {
                         onChange={handlePw}/>
                 </InputWrap>
                 <ErrorMessageWrap>
-                    {!pwValid && pw.length > 0 && (
-                        <div>올바른 비밀번호를 입력해주세요 </div>
+                    {!pwValid && pw.length > 0  }
+                    {errorMessage && (
+                        <div>{errorMessage}</div>
                     )}
                 </ErrorMessageWrap>
             </ContentWrap>

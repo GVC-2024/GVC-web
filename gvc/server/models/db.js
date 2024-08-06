@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('gvc', 'gvcuser', 'Password2024!', {
-  host: '172.20.33.108',
+  host: '172.20.33.98',
   dialect: 'mysql',
 });
 
