@@ -5,8 +5,15 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
+import {  css } from '@emotion/react';
 
 const SERVER_URL = 'http://localhost:4000'; // 서버 주소와 포트
+
+const containerStyle = css`
+ @import url('./HomeMeetingPage.css');
+`;
+
+
 
 function HomeMeetingPage() {
   useEffect(() => {
@@ -42,17 +49,7 @@ function HomeMeetingPage() {
     let isDisplayChatLog = true; //chat log 보이기 숨기기
     const socket = io(SERVER_URL);
 
-    // 연결이 성공했을 때 실행되는 핸들러
-    socket.on('connect', () => {
-      
-      console.log("start");
-      requestServerEnterRoom(inputRoomID, inputUserNick);
-    });
 
-    // 연결이 끊겼을 때 실행되는 핸들러
-    socket.on('disconnect', () => {
-
-    });
 
 //
     
@@ -88,6 +85,15 @@ video.addEventListener('click', handleMyVideoOn); //비디오 on off
 //socket 정리
 //
 //소켓 수신
+// 연결이 성공했을 때 실행되는 핸들러
+socket.on('connect', () => {
+      console.log("start");
+      requestServerEnterRoom(inputRoomID, inputUserNick);
+});
+// 연결이 끊겼을 때 실행되는 핸들러
+socket.on('disconnect', () => {
+
+});
 //인원수 초과로 인한 방 참가 거부
 socket.on("denialFull", async() => {alert("full member. denial enter");});
 //방에 정상적으로 들어감. 
@@ -480,14 +486,13 @@ function adjustGrid() {
 //페이지
 
 return (
-  <div>
-    <HelmetProvider>
-    <Helmet>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    </Helmet>
-    </HelmetProvider>
 
-    <div id="screen">
+    <div id="screen" css={containerStyle}>
+      <HelmetProvider>
+      <Helmet>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+      </Helmet>
+      </HelmetProvider>
       <main>
         <div className="content">
           <div className="video_grid_wrapper">
@@ -554,7 +559,6 @@ return (
       
 
     </div>
-  </div>
 );
 }
 
