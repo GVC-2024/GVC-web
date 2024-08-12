@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import {  css } from '@emotion/react';
+import RealTimeSpeechTranslation from './RealTimeSpeechTranslation';
 
 const SERVER_URL = 'http://localhost:4000'; // 서버 주소와 포트
 
@@ -501,7 +502,7 @@ return (
           <div className="tool_container">
             <button className="button" id="schedule_Meeting">일정 관리</button>
             <button className="button" id="share_note">공유 메모장</button>
-            <button className="button" id="see_video_log">발표자 내용 기록 및 번역</button>
+            <button className="button" id="see_video_log">발표자 내용 기록 및 번역 <RealTimeSpeechTranslation /> </button>
           </div>
           <div id="chat">
             <header>
