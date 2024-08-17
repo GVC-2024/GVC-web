@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"/>
+  <link rel="stylesheet" href="./style.css">
+  <meta charset="utf-8" />
+  <title>KalidoKit - Face and Body Rig Solver</title>
+  <!--three.js-->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.140.2/build/three.min.js" integrity="sha256-8CFqISEHDRT+UakNv52KG8Yhm5tV+OR5Kq84Z+YTrG0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.min.js"></script>
+  <!--mediapipe-->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic/holistic.js" crossorigin="anonymous"></script>
+  <!--     Kalidokit Kinematic Solver -->
+  <script src="https://cdn.jsdelivr.net/npm/kalidokit@1.1/dist/kalidokit.umd.js"></script></head>
+<body>
+  <div class="container">
+    <video class="input_video" ></video>
+    <canvas class="output_canvas" ></canvas>
+  </div>
+  <div class="container_character">
+    <canvas class="character_canvas"></canvas>
+  </div>
+  <script type="module" src="./script2.js" >
+    </script>
+</body>
+</html>
