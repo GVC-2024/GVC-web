@@ -29,6 +29,8 @@ npm install @mediapipe/camera_utils@0.3.1675466862 @mediapipe/holistic@0.5.16754
 캐릭터 트래킹: OpenCV 또는 Mediapipe
 캐릭터 애니메이션: Blender, Three.js, 또는 Live2D와 Live2D의 SDK
 
+관련 깃허브 및 사이트
+
 라이브2d를 사용한 것(몸 전체 커버 가능)
 https://github.com/yeemachine/kalidokit
 
