@@ -37,7 +37,8 @@ https://github.com/yeemachine/kalidokit
 블렌더를 사용한 것.
 https://github.com/jays0606/mediapipe-facelandmark-demo
 
-mediapipe: 공식문서
+mediapipe: 공식문서:
 https://github.com/google-ai-edge/mediapipe/blob/master/docs/solutions/holistic.md
-three.js  공식문서
+
+three.js  공식문서:
 https://threejs.org/docs/
