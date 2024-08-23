@@ -166,10 +166,15 @@ footer i.fas{
     margin: 0px;
 
 }
+#seetings2{
+    position: relative; /* 부모 요소를 기준으로 설정 */
+    margin: 0px;
+
+}
 #setting_dropdown_menu {
     display: none; 
     position: absolute;
-    top: -73px; /* 컨트롤바의 위쪽으로 이동 */
+    top: -72px; /* 컨트롤바의 위쪽으로 이동 */
     left: 50%; /* 가운데 정렬 */
     transform: translateX(-50%); /* 가운데 정렬을 위한 이동 */
     width: 125px;
@@ -205,15 +210,24 @@ footer i.fas{
 
 /*chat 전체 공간 */
 #chat{
-    margin: 0px;
     height: 100%;
     max-width: 400px;
-    height:100%; 
     display: flex;
     flex-direction: column; /* 요소들을 수직으로 배치 */
     margin: 0px;
     padding: 0px; 
 }
+#note{
+    margin: 0px;
+    height: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column; /* 요소들을 수직으로 배치 */
+    margin: 10px;
+    background-color: #bbebfa;
+    padding: 10px;
+}
+
 
 /* chat 구획 나눠 주기 */
 
@@ -389,3 +403,34 @@ footer i.fas{
 }
 
 
+
+/*--공유 노트--*/
+#noteContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* 툴바 스타일 */
+  .ql-toolbar {
+    position: flex;; /* 상단에 고정 */
+    top: 0;
+    left: 0;
+    margin-bottom: 0px;
+    padding: 0px;
+    width: 100%; /* 전체 너비 */
+    background-color: #63a2f1;
+    z-index: 1000; /* 다른 요소들 위에 위치 */
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* 에디터 스타일 */
+  .ql-editor {
+    z-index: 100; /* 다른 요소들 위에 위치 */
+    overflow-y: auto; /* 내용이 넘칠 때 스크롤 표시 */
+    background-color: #ffffff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5) !important;
+    height: 70vh; /* 전체 화면 높이에서 툴바 높이를 뺀 값 */
+  }

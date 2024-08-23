@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import './HomeMeetingPage.css';
 import {Helmet, HelmetProvider} from 'react-helmet-async';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import {  css } from '@emotion/react';
+
+import TextEditor from "../share_note/TextEditor";
 
 const SERVER_URL = 'http://localhost:4000'; // 서버 주소와 포트
 
@@ -16,11 +17,13 @@ const containerStyle = css`
 
 
 function HomeMeetingPage() {
+
   useEffect(() => {
 
     //화면 요소 가져오기.
     const seeVideoLogButton = document.getElementById('see_video_log');
     const chatDiv = document.getElementById('chat');
+    const noteDiv = document.getElementById('note');
     const videoGrid = document.querySelector('.video_grid');
     const chatArea = document.getElementById('chatArea');
     const chatBox =  document.getElementById('send_message');
@@ -36,6 +39,7 @@ function HomeMeetingPage() {
     const chatExitBtn = document.getElementById('chat_exit');
     const exitBtn = document.getElementById('exit');
     const videoSettingBtn = document.getElementById("settingButton");
+    const shareNoteBtn = document.getElementById("share_note");
     //소켓 전송 .
     //정보 가져오기.
     const urlParams = new URLSearchParams(window.location.search);
@@ -47,6 +51,7 @@ function HomeMeetingPage() {
     let myVideoStream=null; //현재 자신의 카메라 스트림.
     let peersConnection = {}; // peerSocketId //자신과 연결중인 peer소켓.
     let isDisplayChatLog = true; //chat log 보이기 숨기기
+    let isDisplayNote = true; //chat log 보이기 숨기기
     const socket = io(SERVER_URL);
 
 
@@ -74,7 +79,8 @@ seeVideoLogButton.addEventListener('click', showVideoLog);
 chatExitBtn.addEventListener('click', showVideoLog);
 //댓글 보내기
 chatSendBtn.addEventListener('click', sendMyMessage);
-//공유 메모장은 share_note에 있음.
+//공유 메모장 창 열고 닫기
+shareNoteBtn.addEventListener('click', showNote);
 //일정관리는 아직 작성하지 않음.
 videoSettingBtn.addEventListener('click', showSettingOption);//자기 비디오 설정.
 mute.addEventListener('click', handleAudioOn); // 오디오 on off.
@@ -112,6 +118,10 @@ socket.on("getMessage", writeOtherMessage);
 socket.on("enterRoomChat", async(chatLog) => {handleEnterchat(chatLog);});
 //피어방 나가기
 socket.on("leavePeer",async(peerSocktId)=>{handleLeavePeer(peerSocktId)});
+//새로 추가된 내용-노트 관련
+//handleMakeNote
+socket.on("getDocs",async(docsID)=>{handleMakeNote(docsID)});
+
 /*
 //내방 나가기peerSocktId
 socket.on("leaveMyRoom",async()=>{
@@ -130,7 +140,28 @@ async function requestServerEnterRoom(roomName, userNickName) {
     await socket.emit("requestServerEnterRoom", roomName, userNickName);
 }
 // 방에 들어가도 된다고 허락받음 => 정보 전송.
+async function handleMakeNote(docsID){
+  // 'note' ID를 가진 요소를 찾습니다.
+  const noteElement = document.getElementById('note');
+
+
+  if (noteElement) {
+    // React 요소를 생성합니다.
+    const textEditorElement = React.createElement(TextEditor, { documentId:docsID });
+  
+    // createRoot를 사용하여 React 요소를 렌더링합니다.
+    const root = createRoot(noteElement);
+    root.render(
+      <React.StrictMode>
+        {textEditorElement}
+      </React.StrictMode>
+    );
+  }
+}
 async function handleEnter(users){
+  //
+
+  //
     const usersNum = users.length;
     //let message=`${inputUserNick} enter`;
     //socket.emit("sendAnouncment", inputRoomID,inputUserNick, message);
@@ -290,6 +321,19 @@ function showVideoLog() {
         isDisplayChatLog=false;
         
     }
+
+}
+//note 숨기기/보이기
+//채팅창 숨기기/보이기
+function showNote() {
+  if (isDisplayNote === false) {
+      noteDiv.classList.remove('hide_out_screen');
+      isDisplayNote=true;
+  } else {
+    noteDiv.classList.add('hide_out_screen');
+      isDisplayNote=false;
+      
+  }
 
 }
 //
@@ -462,7 +506,6 @@ function adjustGrid() {
 }
   //비디오 옵션 표시 토글
   function showSettingOption(){
-    alert(`cl:${settingDropdownMenu.style.display}`);
     settingDropdownMenu.style.display = (settingDropdownMenu.style.display === "block") ? "none" : "block" ; 
   }
 
@@ -475,7 +518,7 @@ function adjustGrid() {
       chatExitBtn.removeEventListener('click', showVideoLog);
       //댓글 보내기
       chatSendBtn.removeEventListener('click', sendMyMessage);
-      //공유 메모장은 share_note에 있음.
+      //공유 메모장 열기
       //일정관리는 아직 작성하지 않음.
       videoSettingBtn.removeEventListener('click', showSettingOption);//자기 비디오 설정.
       mute.removeEventListener('click', handleAudioOn); // 오디오 on off.
@@ -502,6 +545,9 @@ return (
             <button className="button" id="schedule_Meeting">일정 관리</button>
             <button className="button" id="share_note">공유 메모장</button>
             <button className="button" id="see_video_log">발표자 내용 기록 및 번역</button>
+          </div>
+          <div id="note">
+            
           </div>
           <div id="chat">
             <header>
@@ -538,26 +584,28 @@ return (
           <i className="fas fa-hand-pointer"></i>
           */}
           <div id="settings">
-            <div id="setting_dropdown_menu">
-              <div id="setting_dropdown_item">사용자 초대</div>
-              {/* 
-              <div id="setting_dropdown_item">배경설정</div>
-              <div id="setting_dropdown_item">비디오/마이크 설정</div>
-              */}
-              <div id="setting_dropdown_item">회의링크 복사</div>
+            <div id="seetings2">
+              <div id="setting_dropdown_menu">
+                <div id="setting_dropdown_item">사용자 초대</div>
+                {/* 
+                <div id="setting_dropdown_item">배경설정</div>
+                <div id="setting_dropdown_item">비디오/마이크 설정</div>
+                */}
+                <div id="setting_dropdown_item">회의링크 복사</div>
+              </div>
             </div>
+
             <button className="control_icon" id="settingButton">
               <i className="fas fa-cog"></i>
               setting
             </button>
           </div>
+          
         </div>
         <button className="div" id="exit">
           <i className="fas fa-power-off"></i>
         </button>
       </footer>
-      
-
     </div>
 );
 }

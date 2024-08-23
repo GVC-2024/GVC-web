@@ -1,0 +1,39 @@
+/* 전체 문서 및 브라우저 툴바 숨기기 */
+*{
+  margin: 0;
+  padding: 0;
+}
+html, body {
+
+  overflow: hidden; /* 전체 페이지의 스크롤 숨기기 */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 툴바 스타일 */
+.ql-toolbar {
+  position: flex;; /* 상단에 고정 */
+  top: 0;
+  left: 0;
+  margin-bottom: 0px;
+  padding: 0px;
+  width: 100%; /* 전체 너비 */
+  background-color: #63a2f1;
+  z-index: 1000; /* 다른 요소들 위에 위치 */
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 에디터 스타일 */
+.ql-editor {
+  z-index: 100; /* 다른 요소들 위에 위치 */
+  overflow-y: auto; /* 내용이 넘칠 때 스크롤 표시 */
+  background-color: #ffffff;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5) !important;
+  height: 70vh; /* 전체 화면 높이에서 툴바 높이를 뺀 값 */
+}
