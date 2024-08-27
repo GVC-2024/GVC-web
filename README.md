@@ -1,3 +1,61 @@
+1. 서버 폴더에 
+server_note.js,Document.js 추가
+
+2. 서버 폴더의 pakcage.json의 scripts에  "note": "node server_note.js", 추가
+
+
+3. pages에 sharnote 폴더 파일들 추가
+4. meeting 폴더에 HomeMeetingPage.css 변경.
+5. homemeetingpage.js 변경
+import TextEditor from "../share_note/TextEditor";
+    //화면 요소 가져오기. <-파일 주석 쓰인 부분. 
+    const noteDiv = document.getElementById('note');
+    //버튼
+    const shareNoteBtn = document.getElementById("share_note");
+    //변수 선언하기
+    let isDisplayNote = true; //chat log 보이기 숨기기
+    //공유 메모장 창 열고 닫기
+    shareNoteBtn.addEventListener('click', showNote);
+아래 쪽에 함수 추가
+//채팅창 숨기기/보이기
+function showNote() {
+  if (isDisplayNote === false) {
+      noteDiv.classList.remove('hide_out_screen');
+      isDisplayNote=true;
+  } else {
+    noteDiv.classList.add('hide_out_screen');
+      isDisplayNote=false;
+      
+  }
+
+}
+1. settings 프론트 수정
+          <div id="settings">
+            <div id="seetings2">
+              <div id="setting_dropdown_menu">
+                <div id="setting_dropdown_item">사용자 초대</div>
+                {/* 
+                <div id="setting_dropdown_item">배경설정</div>
+                <div id="setting_dropdown_item">비디오/마이크 설정</div>
+                */}
+                <div id="setting_dropdown_item">회의링크 복사</div>
+              </div>
+            </div>
+
+            <button className="control_icon" id="settingButton">
+              <i className="fas fa-cog"></i>
+              setting
+            </button>
+          </div>
+2. tool 부분 수정
+          <div className="tool_container">
+            <button className="button" id="schedule_Meeting">일정 관리</button>
+            <button className="button" id="share_note">공유 메모장</button>
+            <button className="button" id="see_video_log">발표자 내용 기록 및 번역</button>
+          </div>
+          <div id="note">
+          <div class="notebook">
+	  
 gvc 통합 사항 변경사항 정리 
 - 화상회의 통합한 부분만 있음. 로그인 x
 
