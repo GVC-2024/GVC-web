@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './HomeMeetingPage.css';
 import {Helmet, HelmetProvider} from 'react-helmet-async';
 import ReactDOM from 'react-dom';
@@ -17,7 +17,12 @@ const containerStyle = css`
 
 
 function HomeMeetingPage() {
+  const [socket, setSocket] = useState(null);
+  const [receivedTranslatedText, setReceivedTranslatedText] = useState([]);
+
   useEffect(() => {
+    const newSocket = io(SERVER_URL);
+    setSocket(newSocket);
 
     //화면 요소 가져오기.
     const seeVideoLogButton = document.getElementById('see_video_log');
@@ -49,6 +54,11 @@ function HomeMeetingPage() {
     let peersConnection = {}; // peerSocketId //자신과 연결중인 peer소켓.
     let isDisplayChatLog = true; //chat log 보이기 숨기기
     const socket = io(SERVER_URL);
+
+    // 다른 사용자가 보낸 번역된 텍스트 수신
+    newSocket.on('receiveTranslatedText', ({ userNick, text }) => {
+      setReceivedTranslatedText(prevTexts => [...prevTexts, `${userNick}: ${text}`]);
+    });
 
 
 
@@ -468,6 +478,7 @@ function adjustGrid() {
   }
 
     return () => {
+      newSocket.disconnect();
       socket.disconnect(); // 컴포넌트가 언마운트될 때 연결 해제
       //페이지 종료 버튼 클릭 시 창 닫기. 
       exitBtn.removeEventListener('click', function() {socket.emit("leaveRoom", inputRoomID,inputUserNick, socket.id);socket.disconnect();window.close();}); 
@@ -502,7 +513,7 @@ return (
           <div className="tool_container">
             <button className="button" id="schedule_Meeting">일정 관리</button>
             <button className="button" id="share_note">공유 메모장</button>
-            <button className="button" id="see_video_log">발표자 내용 기록 및 번역 <RealTimeSpeechTranslation /> </button>
+            <button className="button" id="see_video_log">발표자 내용 기록 및 번역</button>
           </div>
           <div id="chat">
             <header>
@@ -519,7 +530,19 @@ return (
           </div>
         </div>
       </main>
-
+      <div id="translation_screen">
+        <div className='translation_area'>
+          <RealTimeSpeechTranslation socket={socket} userNick="myUserNick" />
+        </div>
+        <div>
+          <h2 id="translated-messages">Translated Messages:</h2>
+            <div className='translated-messages-container'>
+              {Array.isArray(receivedTranslatedText) && receivedTranslatedText.map((msg, index) => (
+              <p key={index}>{msg}</p>
+            ))}
+          </div>
+        </div>
+      </div>
       <footer>
         <div className="control_icon_container">
           <button className="control_icon" id="mute">
